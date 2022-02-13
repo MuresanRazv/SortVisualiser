@@ -1,0 +1,5 @@
+BLACK = "#000000"
+BLUE = "#0066ff"
+LIGHTBLUE = "#5c9dff"
+WHITE = "#ffffff"
+RED = "#fa1100"
