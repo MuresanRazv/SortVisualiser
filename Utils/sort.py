@@ -6,13 +6,13 @@ QUICKSORT
 """
 
 
-def partition(a_list, low, high, window, timeTick, canvas):
+def partition(a_list, low, high, window, timetick, canvas):
     pivot = a_list[low]
     i = low
     j = high
     draw.draw_current_rectangles(a_list, window, canvas, i, j)
     canvas.update()
-    time.sleep(timeTick)
+    time.sleep(timetick)
     while i != j:
         while pivot <= a_list[j] and i < j:
             j -= 1
@@ -26,16 +26,16 @@ def partition(a_list, low, high, window, timeTick, canvas):
     return i
 
 
-def quickSortRec(a_list, low, high, window, timeTick, canvas):
-    pivotPos = partition(a_list, low, high, window, timeTick, canvas)
+def quickSortRec(a_list, low, high, window, timetick, canvas):
+    pivotPos = partition(a_list, low, high, window, timetick, canvas)
     if low < pivotPos - 1:
-        quickSortRec(a_list, low, pivotPos - 1, window, timeTick, canvas)
+        quickSortRec(a_list, low, pivotPos - 1, window, timetick, canvas)
     if pivotPos + 1 < high:
-        quickSortRec(a_list, pivotPos + 1, high, window, timeTick, canvas)
+        quickSortRec(a_list, pivotPos + 1, high, window, timetick, canvas)
 
 
-def sort(a_list, low, high, timeTick, window, canvas):
-    quickSortRec(a_list, low, high, timeTick, window, canvas)
+def sort(a_list, low, high, timetick, window, canvas):
+    quickSortRec(a_list, low, high, timetick, window, canvas)
     return a_list
 
 
@@ -44,14 +44,14 @@ MERGE SORT
 """
 
 
-def merge_sort(a_list, window, canvas, timeTick):
+def merge_sort(a_list, window, canvas, timetick):
     if len(a_list) > 1:
         middle = len(a_list) // 2
         left = a_list[:middle]
         right = a_list[middle:]
 
-        merge_sort(left, window, canvas, timeTick)
-        merge_sort(right, window, canvas, timeTick)
+        merge_sort(left, window, canvas, timetick)
+        merge_sort(right, window, canvas, timetick)
 
         i = j = k = 0
 
@@ -83,4 +83,21 @@ def merge_sort(a_list, window, canvas, timeTick):
             window.update_idletasks()
 
         canvas.update()
-        time.sleep(timeTick)
+        time.sleep(timetick)
+
+
+"""
+BUBBLE SORT
+"""
+
+
+def bubble_sort(a_list, window, canvas, timetick):
+    for i in range(0, len(a_list)):
+        for j in range(i, len(a_list)):
+            if a_list[i] > a_list[j]:
+                a_list[i], a_list[j] = a_list[j], a_list[i]
+            time.sleep(timetick)
+            draw.draw_current_rectangles(a_list, window, canvas, i, j)
+        time.sleep(timetick)
+        draw.draw_current_rectangles(a_list, window, canvas, i, j)
+

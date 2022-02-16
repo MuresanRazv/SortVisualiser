@@ -4,12 +4,12 @@ from Utils import sort, generate
 
 window = tk.Tk()
 window.title("Sort Visualiser")
-window.geometry("800x700+10+10")
-OPTIONS = ["Quicksort", "Merge Sort"]
+window.geometry("700x600+10+10")
+OPTIONS_SORT = ["Quick Sort", "Merge Sort", "Bubble Sort"]
+OPTIONS_SPEED = ["Slow", "Medium", "Fast"]
 RECTANGLE_X = 20
 RECTANGLE_Y = 350
-rectangle_list = []
-generate.generate_list(rectangle_list)
+SPEED = 0.3
 
 """
 CANVAS
@@ -19,33 +19,61 @@ canvas = tk.Canvas(window, width=700, height=600)
 canvas.grid(row=1, column=0, padx=10, pady=5)
 
 """
-DROPDOWN MENU
+DROPDOWN MENU (SORT AND SPEED)
 """
-current_option = StringVar(window)
-current_option.set(OPTIONS[0])
-option_dropdown = OptionMenu(window, current_option, *OPTIONS)
-option_dropdown.grid()
-option_dropdown.place(x=250, y=40)
+current_option_sort = StringVar(window)
+current_option_sort.set(OPTIONS_SORT[0])
+option_dropdown_sort = OptionMenu(window, current_option_sort, *OPTIONS_SORT)
+option_dropdown_sort.grid()
+option_dropdown_sort.place(x=30, y=40)
+
+current_option_speed = StringVar(window)
+current_option_speed.set(OPTIONS_SPEED[0])
+option_dropdown_speed = OptionMenu(window, current_option_speed, *OPTIONS_SPEED)
+option_dropdown_speed.grid()
+option_dropdown_speed.place(x=140, y=40)
+
 """
-BUTTON FOR DROPDOWN
+BUTTON FOR DROPDOWN (SORT AND SPEED)
 """
 
 
-def get_sort():  # Function to get selected sort function
-    if current_option.get() == OPTIONS[0]:
+def set_speed():
+    global SPEED
+    if current_option_speed.get() == 'Slow':
+        SPEED = 0.3
+    elif current_option_speed.get() == 'Medium':
+        SPEED = 0.1
+    else:
+        SPEED = 0.001
+
+
+def set_sort():  # Function to get selected sort function
+    if current_option_sort.get() == OPTIONS_SORT[0]:
         canvas.delete("all")
         rectangle_list = []
         generate.generate_list(rectangle_list)
-        sort.sort(rectangle_list, 0, len(rectangle_list) - 1, window, 0.08, canvas)
-    elif current_option.get() == OPTIONS[1]:
+        sort.sort(rectangle_list, 0, len(rectangle_list) - 1, window, SPEED, canvas)
+
+    elif current_option_sort.get() == OPTIONS_SORT[1]:
         canvas.delete("all")
         rectangle_list = []
         generate.generate_list(rectangle_list)
-        sort.merge_sort(rectangle_list, window, canvas, 0.1)
+        sort.merge_sort(rectangle_list, window, canvas, SPEED)
+
+    elif current_option_sort.get() == OPTIONS_SORT[2]:
+        canvas.delete("all")
+        rectangle_list = []
+        generate.generate_list(rectangle_list)
+        sort.bubble_sort(rectangle_list, window, canvas, SPEED)
 
 
-button = Button(window, text="Start Sort", command=get_sort)
-button.grid()
-button.place(x=250, y=10)
+button_sort = Button(window, text="Start Sort", command=set_sort)
+button_sort.grid()
+button_sort.place(x=30, y=10)
+
+button_speed = Button(window, text="Set Speed", command=set_speed)
+button_speed.grid()
+button_speed.place(x=140, y=10)
 
 window.mainloop()
