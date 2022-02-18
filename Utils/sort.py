@@ -11,18 +11,22 @@ def partition(a_list, low, high, window, timetick, canvas):
     i = low
     j = high
     draw.draw_current_rectangles(a_list, window, canvas, i, j)
-    canvas.update()
     time.sleep(timetick)
     while i != j:
         while pivot <= a_list[j] and i < j:
             j -= 1
+            draw.draw_current_rectangles(a_list, window, canvas, i, j)
+            time.sleep(timetick)
         a_list[i] = a_list[j]
+        draw.draw_current_rectangles(a_list, window, canvas, i, j)
         while a_list[i] <= pivot and i < j:
             i += 1
+            draw.draw_current_rectangles(a_list, window, canvas, i, j)
+            time.sleep(timetick)
         a_list[j] = a_list[i]
         a_list[i] = pivot
+        draw.draw_current_rectangles(a_list, window, canvas, i, j)
     draw.draw_current_rectangles(a_list, window, canvas, i, j)
-    window.update_idletasks()
     return i
 
 
